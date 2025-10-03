@@ -205,7 +205,11 @@ extension GPXParser: XMLParserDelegate {
     public func parser(_ parser: XMLParser, foundCharacters string: String) {
         let value = string.trimmingCharacters(in: .whitespacesAndNewlines)
         if !value.isEmpty {
-            builder.currentValue = value
+            if let existing = builder.currentValue {
+                builder.currentValue = existing + value
+            } else {
+                builder.currentValue = value
+            }
         }
     }
 
